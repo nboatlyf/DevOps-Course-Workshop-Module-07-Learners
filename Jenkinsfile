@@ -5,23 +5,30 @@ pipeline {
         DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
     }
     stages {
-        stage('Build C# code') {
+        stage('Build and test C# code') {
             agent {
                 docker { image 'mcr.microsoft.com/dotnet/core/sdk:3.1' }
             }
-            steps {
-                echo 'Building..'
-                sh 'dotnet build'
+
+            stages {
+
+                stage('Build C# code') {
+                    steps {
+                        echo 'Building C# code..'
+                        sh 'dotnet build'
+                    }
+                }
+
+                stage('Run C# tests') {
+                    steps {
+                        echo 'Running C# tests'
+                        sh 'dotnet test'
+                    }     
+                }
+
             }
-        }
-        stage('Run C# tests') {
-            agent {
-                docker { image 'mcr.microsoft.com/dotnet/core/sdk:3.1' }
-            }
-            steps {
-                echo 'Building..'
-                sh 'dotnet test'
-            }
+
+
         }
         stage('Test') {
             steps {
