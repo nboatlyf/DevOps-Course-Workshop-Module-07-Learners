@@ -40,27 +40,30 @@ pipeline {
                 stage('Build typescript code') {
                     steps {
                         dir('./DotnetTemplate.Web/') {
-                            //sh 'npm install'
-                            //sh 'npm run build'
+                            sh 'npm install'
+                            sh 'npm run build'
                         }
                     }
                 }
 
                 stage('Run linter on typescript code') {
                     steps {
-                        echo 'Yoooooo'
+                        dir('./DotnetTemplate.Web/') {
+                            sh 'npm run lint'
+                        }
                     }
                 }
 
                 stage('Run tests on typescript code') {
                     steps {
-                        echo 'hlellllloo'
+                        dir('./DotnetTemplate.Web/') {
+                            sh 'npm t'
+                        }
                     }
                 }
 
             }
 
         }
-    
     }
 }
