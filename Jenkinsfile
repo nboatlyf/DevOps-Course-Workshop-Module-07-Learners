@@ -1,14 +1,14 @@
 pipeline {
-    agent {
-        docker { image 'node:14-alpine' }
-    }
+    agent none
 
     stages {
-        stage('Build') {
+        stage('Build C# code') {
+            agent {
+                docker { image 'mcr.microsoft.com/dotnet/core/sdk:3.1' }
+            }   
             steps {
                 echo 'Building..'
-                // Build the C# code.
-                sh 'node --version'
+                //dotnet build
             }
         }
         stage('Test') {
