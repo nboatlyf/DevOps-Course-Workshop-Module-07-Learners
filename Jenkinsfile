@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
     }
+
     stages {
         stage('Build and test C# code') {
             agent {
@@ -27,18 +28,39 @@ pipeline {
                 }
 
             }
-
-
         }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
+        
+        stage('Build and test typescript code') {
+            agent {
+                docker { image 'node:14-alpine' }
             }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+
+            stages {
+
+                stage('Build typescript code') {
+                    steps {
+                        dir('./DotnetTemplate.Web/') {
+                            //sh 'npm install'
+                            //sh 'npm run build'
+                        }
+                    }
+                }
+
+                stage('Run linter on typescript code') {
+                    steps {
+                        echo 'Yoooooo'
+                    }
+                }
+
+                stage('Run tests on typescript code') {
+                    steps {
+                        echo 'hlellllloo'
+                    }
+                }
+
             }
+
         }
+    
     }
 }
