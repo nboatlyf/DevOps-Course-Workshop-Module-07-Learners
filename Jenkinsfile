@@ -14,6 +14,15 @@ pipeline {
                 sh 'dotnet build'
             }
         }
+        stage('Run C# tests') {
+            agent {
+                docker { image 'mcr.microsoft.com/dotnet/core/sdk:3.1' }
+            }
+            steps {
+                echo 'Building..'
+                sh 'dotnet test'
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Testing..'
