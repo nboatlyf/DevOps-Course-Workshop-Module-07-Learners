@@ -12,3 +12,5 @@ jobs:
       run: |
         dotnet build
         cd  ./DotnetTemplate.Web/
+        npm install
+        npm run build
